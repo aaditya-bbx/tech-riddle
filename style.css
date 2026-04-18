@@ -99,14 +99,23 @@ header p { color: var(--text-muted); font-size: 1.1rem; max-width: 500px; margin
 .next-btn { background: transparent; border: 1px solid var(--text-main); color: var(--text-main); padding: 12px 24px; border-radius: 6px; font-family: var(--font-heading); font-weight: 700; cursor: pointer; width: 100%; transition: 0.2s; }
 .next-btn:hover { background: var(--text-main); color: var(--bg); }
 
-/* Crossword Specific */
+/* Crossword Specific Layout */
 .cw-layout { display: flex; flex-direction: column; gap: 2rem; }
+
+/* THE SCROLL FIX: Separating scrolling from the grid itself */
+.cw-grid-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 10px; /* Buffer for scrollbar */
+}
+
 .cw-grid-container {
   display: grid; gap: 2px; background: var(--border); padding: 16px; 
-  border-radius: 8px; justify-content: center; width: max-content;
-  margin: 0 auto; overflow-x: auto; box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-  max-width: 100%;
+  border-radius: 8px; width: max-content; margin: 0 auto;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
 }
+
 .cw-cell { position: relative; width: 38px; height: 38px; background: var(--cw-cell-bg); }
 .cw-cell.empty { background: transparent; }
 .cw-input {
@@ -177,15 +186,7 @@ footer { text-align: center; margin-top: 4rem; padding-top: 2rem; border-top: 1p
   /* Crossword Specific Refs */
   .cw-clues { flex-direction: column; gap: 1rem; }
   .clue-col { min-width: 100%; padding: 1rem; }
-  
-  /* ---- THE SCROLL FIX ---- */
-  .cw-grid-container { 
-    justify-content: flex-start; /* Stops the left side from clipping off-screen */
-    width: 100%;                 /* Gives the scrollbar a strict boundary */
-    padding: 12px; 
-    border-radius: 4px; 
-    -webkit-overflow-scrolling: touch; /* Smooth momentum scrolling on iOS */
-  }
+  .cw-grid-container { padding: 12px; }
 }
 
 @media (max-width: 480px) {
