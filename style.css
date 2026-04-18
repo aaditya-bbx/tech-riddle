@@ -105,7 +105,7 @@ header p { color: var(--text-muted); font-size: 1.1rem; max-width: 500px; margin
   display: grid; gap: 2px; background: var(--border); padding: 16px; 
   border-radius: 8px; justify-content: center; width: max-content;
   margin: 0 auto; overflow-x: auto; box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-  max-width: 100%; /* Ensures the scrollbar kicks in on mobile */
+  max-width: 100%;
 }
 .cw-cell { position: relative; width: 38px; height: 38px; background: var(--cw-cell-bg); }
 .cw-cell.empty { background: transparent; }
@@ -177,7 +177,15 @@ footer { text-align: center; margin-top: 4rem; padding-top: 2rem; border-top: 1p
   /* Crossword Specific Refs */
   .cw-clues { flex-direction: column; gap: 1rem; }
   .clue-col { min-width: 100%; padding: 1rem; }
-  .cw-grid-container { padding: 8px; border-radius: 4px; }
+  
+  /* ---- THE SCROLL FIX ---- */
+  .cw-grid-container { 
+    justify-content: flex-start; /* Stops the left side from clipping off-screen */
+    width: 100%;                 /* Gives the scrollbar a strict boundary */
+    padding: 12px; 
+    border-radius: 4px; 
+    -webkit-overflow-scrolling: touch; /* Smooth momentum scrolling on iOS */
+  }
 }
 
 @media (max-width: 480px) {
