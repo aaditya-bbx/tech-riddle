@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>IoT & Tech Riddle Challenge</title>
+<title>Tech Riddle Challenge</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Syne:wght@400;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
@@ -13,84 +13,129 @@
 
   <header>
     <div class="header-tag"><div class="dot-pulse"></div> LIVE CHALLENGE</div>
+    
+    <button class="theme-toggle-btn" onclick="toggleTheme()" id="themeToggleBtn">
+      ☼ Light Mode
+    </button>
+
     <h1>The <span>Connected</span><br>Riddle Challenge</h1>
     <p>Each riddle hides a piece of the modern technology stack. Test your knowledge of the hardware, software, and systems that run our world.</p>
+    
+    <button class="toggle-mode-btn" onclick="toggleMode()">
+      ⇄ Wanna do a crossword instead?
+    </button>
   </header>
 
-  <div class="stats-bar">
-    <div class="stat-chip"><span class="stat-label">TRIED</span><span class="stat-val teal" id="statAttempted">0</span></div>
-    <div class="stat-chip"><span class="stat-label">CORRECT</span><span class="stat-val green" id="statCorrect">0</span></div>
-    <div class="stat-chip"><span class="stat-label">STREAK</span><span class="stat-val" id="statStreak">0</span></div>
-    <div class="stat-chip"><span class="stat-label">ACCURACY</span><span class="stat-val" id="statAccuracy">—</span></div>
-  </div>
-
-  <div class="progress-dots" id="progressDots"></div>
-
-  <div class="arena" id="arena">
-    <div class="arena-header">
-      <div class="arena-meta">
-        <span class="theme-badge" id="themeBadge">THEME</span>
-        <span class="riddle-counter" id="riddleCounter">RIDDLE 01 / 10</span>
-      </div>
+  <div id="riddleView">
+    <div class="stats-bar">
+      <div class="stat-chip"><span class="stat-label">TRIED</span><span class="stat-val teal" id="statAttempted">0</span></div>
+      <div class="stat-chip"><span class="stat-label">CORRECT</span><span class="stat-val green" id="statCorrect">0</span></div>
+      <div class="stat-chip"><span class="stat-label">STREAK</span><span class="stat-val" id="statStreak">0</span></div>
+      <div class="stat-chip"><span class="stat-label">ACCURACY</span><span class="stat-val" id="statAccuracy">—</span></div>
     </div>
 
-    <div class="arena-body">
-      <div class="riddle-label">// WHAT AM I?</div>
-      <p class="riddle-text" id="riddleText">Loading...</p>
+    <div class="progress-dots" id="progressDots"></div>
 
-      <div class="answer-zone">
-        <div class="input-row">
-          <input class="answer-input" id="answerInput" type="text"
-            placeholder="What am I? Type here..."
-            onkeydown="if(event.key==='Enter') checkAnswer()"
-            autocomplete="off" autocorrect="off" spellcheck="false" />
-          <button class="check-btn" id="checkBtn" onclick="checkAnswer()">Check →</button>
+    <div class="arena" id="arena">
+      <div class="arena-header">
+        <div class="arena-meta">
+          <span class="theme-badge" id="themeBadge">THEME</span>
+          <span class="riddle-counter" id="riddleCounter">RIDDLE 01 / 10</span>
         </div>
+        <button class="view-solved-btn" onclick="toggleModal()">[ View Solved ]</button>
+      </div>
 
-        <div class="hint-row">
-          <button class="hint-btn" id="hintBtn" onclick="toggleHint()">Need a hint?</button>
+      <div class="arena-body">
+        <div class="riddle-label">// WHAT AM I?</div>
+        <p class="riddle-text" id="riddleText">Loading...</p>
+
+        <div class="answer-zone">
+          <div class="input-row">
+            <input class="answer-input" id="answerInput" type="text"
+              placeholder="What am I? Type here..."
+              onkeydown="if(event.key==='Enter') checkAnswer()"
+              autocomplete="off" autocorrect="off" spellcheck="false" />
+            <button class="check-btn" id="checkBtn" onclick="checkAnswer()">Check →</button>
+          </div>
+
+          <div class="hint-row">
+            <button class="hint-btn" id="hintBtn" onclick="toggleHint()">Need a hint?</button>
+          </div>
+          <div class="hint-text" id="hintText" style="display: none;"></div>
+
+          <div class="feedback" id="feedback"></div>
+          <button class="next-btn" id="nextBtn" onclick="loadRandom()">→ Try Another Riddle</button>
         </div>
-        <div class="hint-text" id="hintText"></div>
+      </div>
+    </div>
+  </div>
 
-        <div class="feedback" id="feedback"></div>
-        <button class="next-btn" id="nextBtn" onclick="loadRandom()">→ Try Another Riddle</button>
+  <div id="crosswordView" style="display: none;">
+    <div class="arena">
+      <div class="arena-header" style="justify-content: center;">
+        <span class="theme-badge">SYSTEM OVERRIDE: CROSSWORD MODE</span>
+      </div>
+      <div class="arena-body cw-layout">
+        <div class="cw-grid-container" id="crosswordGrid">
+          </div>
+        
+        <div class="cw-clues">
+          <div class="clue-col">
+            <h3>Across</h3>
+            <ul id="cluesAcross"></ul>
+          </div>
+          <div class="clue-col">
+            <h3>Down</h3>
+            <ul id="cluesDown"></ul>
+          </div>
+        </div>
+        
+        <div class="cw-actions">
+          <button class="check-btn" onclick="checkCrossword()">Verify Grid</button>
+          <div id="cwFeedback" class="feedback" style="display:none; margin-top: 1rem;"></div>
+        </div>
       </div>
     </div>
   </div>
 
   <div class="article">
     <div class="article-eyebrow">
-      <span class="art-tag">FEATURED ARTICLE</span>
-      <span class="art-date">// APRIL 2026</span>
+      <span class="art-tag">DEEP DIVE</span>
+      <span class="art-date">// ARCHITECTURE & SYSTEMS</span>
     </div>
-    <h2>Your World Is Already Connected — You Just Haven't Noticed</h2>
-    <p class="sub">Smart watches, voice assistants, connected fridges, automatic streetlights — IoT isn't a buzzword anymore. It's quietly living in your home, your pocket, and your city.</p>
+    <h2>The Invisible Infrastructure Running Your World</h2>
+    <p class="sub">We obsess over the glass screens in our pockets, but the real technological revolution is happening in the server racks, fiber-optic trenches, and silicon micro-controllers we never see.</p>
+    
     <div class="metrics">
-      <div class="metric"><div class="metric-label">CONNECTED DEVICES</div><div class="metric-val">18B+</div><div class="metric-note">worldwide in 2026</div></div>
-      <div class="metric"><div class="metric-label">SMART HOMES</div><div class="metric-val">400M</div><div class="metric-note">globally installed</div></div>
-      <div class="metric"><div class="metric-label">DEVICES PER HOME</div><div class="metric-val">22</div><div class="metric-note">in connected households</div></div>
-      <div class="metric"><div class="metric-label">MARKET BY 2030</div><div class="metric-val">$1.5T</div><div class="metric-note">projected IoT value</div></div>
+      <div class="metric"><div class="metric-label">GLOBAL DATA PRODUCED</div><div class="metric-val">175 ZB</div><div class="metric-note">Projected by 2025</div></div>
+      <div class="metric"><div class="metric-label">EDGE NODES</div><div class="metric-val">30M+</div><div class="metric-note">Active deployments</div></div>
+      <div class="metric"><div class="metric-label">LATENCY TARGET</div><div class="metric-val">< 5ms</div><div class="metric-note">For critical systems</div></div>
     </div>
+
     <div class="article-body">
-      <p>The Internet of Things — IoT for short — sounds complicated. It isn't. At its simplest, it means ordinary objects that can connect to the internet and share information with each other or with you. Your smartwatch tracking your heartbeat, your doorbell sending a video to your phone, your car warning the map app about the traffic jam it is sitting in. That is IoT.</p>
-      <p><strong>The things that quietly run your home.</strong> Smart thermostats learn your routine within a week. They figure out when you wake up, when you leave, and when you return — and adjust the temperature before you even think to ask. Smart bulbs remember your brightness preferences. Smart plugs track how much electricity a device is using. None of this requires any technical knowledge to use. The technology fades into the background and what remains is a home that simply feels like it knows you.</p>
-      <p><strong>Your health, connected.</strong> Perhaps the most personal IoT device most of us already carry is the smartwatch or fitness band. These small gadgets contain sensors that measure heart rate, blood oxygen, sleep quality, and can even detect irregular heartbeats that might need medical attention. In some hospitals, patients wear lightweight monitors that quietly send their vital signs to nurses down the corridor — meaning staff are alerted before a patient even needs to press a button.</p>
-      <p><strong>The city around you is listening too.</strong> Modern cities are covered in sensors most people walk past without noticing. Traffic lights that adjust their timing based on actual congestion. Rubbish bins that signal when they are full. Street lights that dim when a road is empty and brighten as you approach. Parking meters that tell an app which spots are free nearby. All of this data flows invisibly, making daily life a little smoother in hundreds of small ways.</p>
-      <p><strong>One thing worth keeping in mind.</strong> The more connected our devices become, the more important it is to think about who can see the data they collect. A smart speaker that is always listening, a camera watching your front door, a watch that knows your heartbeat — these are genuinely useful, but they are also windows. Checking privacy settings and keeping device software updated are small habits that matter more than most people realise.</p>
-      <p><strong>What is coming next.</strong> The direction is toward things that anticipate rather than react. A home that notices you might be getting a cold before you feel it. A fridge that reorders groceries as stock runs low. Roads that manage themselves. None of this is science fiction — working versions of each exist somewhere today. The world is already more connected than most people think. The interesting question is how thoughtfully we design what comes next.</p>
-    </div>
-    <div class="iot-tags">
-      <span class="iot-tag">Edge Computing</span>
-      <span class="iot-tag">Hardware</span>
-      <span class="iot-tag">Cloud Storage</span>
-      <span class="iot-tag">Networking</span>
-      <span class="iot-tag">Frame Generation</span>
-      <span class="iot-tag">Audio Tech</span>
-      <span class="iot-tag">Media Centers</span>
+      <p>The "Internet of Things" was once a buzzword used to sell Wi-Fi-enabled refrigerators. Today, it is the nervous system of modern civilization. It is no longer just about smart homes; it is about smart grids, automated supply chains, and digital twins of entire cities. But to make sense of this massive web of connectivity, we have to look past the gadgets and examine the architecture.</p>
+      
+      <p><strong>The shift to Edge Computing.</strong> For years, the default model for tech was the Cloud. Devices collected data, sent it hundreds of miles to a massive server farm, waited for a processor to analyze it, and then received an instruction back. But physics has a speed limit. When you are dealing with autonomous vehicles navigating traffic, or industrial robotic arms making micro-millimeter cuts, waiting 100 milliseconds for a server response is catastrophic. Enter <em>Edge Computing</em>. By moving the processing power out of the central cloud and pushing it to the "edge" of the network—directly onto the smart traffic lights, the factory floors, and the vehicles themselves—devices can make localized, split-second decisions without ever talking to the cloud.</p>
+      
+      <p><strong>Digital Twins and Predictive Reality.</strong> One of the most fascinating developments in modern systems architecture is the concept of the Digital Twin. Jet engine manufacturers, city planners, and logistics companies now build perfect, real-time digital replicas of their physical assets. A digital twin of a wind turbine doesn't just show you how fast the blades are spinning; it uses machine learning models and real-time sensor telemetry to predict exactly when a specific ball bearing will fail—three weeks before it actually happens. This moves maintenance from a reactive panic to a predictable schedule.</p>
+      
+      <p><strong>The Protocol War.</strong> Beneath the sleek interfaces of our apps lies a battleground of networking protocols. Bluetooth and Wi-Fi are familiar, but they are power-hungry. In the world of deeply embedded sensors—like soil monitors in industrial agriculture or structural integrity sensors inside concrete bridges—devices need to run on a single coin-cell battery for a decade. Protocols like LoRaWAN (Long Range Wide Area Network) and Zigbee have stepped in, sacrificing high bandwidth (you can't stream video on them) in exchange for the ability to transmit small packets of data across miles of terrain using almost zero power.</p>
+      
+      <p><strong>The Privacy Toll.</strong> We cannot build a world covered in biometric sensors, tracking cameras, and telemetry nodes without addressing the cost. Every piece of convenience we extract from the modern tech stack requires an exchange of data. The challenge for the next decade of engineers isn't just making systems faster or smaller; it is figuring out how to implement zero-knowledge proofs, homomorphic encryption, and localized AI models so that our environments can be "smart" without inherently becoming surveillance states.</p>
     </div>
   </div>
 
   <footer>// CONNECTED RIDDLE CHALLENGE · SCAN · THINK · SOLVE // <br> Made by Aaditya Narayan using AI</footer>
+</div>
+
+<div class="modal-overlay" id="solvedModal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>Database: Solved</h2>
+      <button class="close-btn" onclick="toggleModal()">&times;</button>
+    </div>
+    <div id="solvedListContainer"></div>
+  </div>
 </div>
 
 <script src="script.js"></script>
