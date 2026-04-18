@@ -1,190 +1,191 @@
-const RIDDLES = [
+const riddles = [
   {
-    id: 1, theme: "Smart Home",
-    riddle: "I live on your wall and I never forget. I watch when you leave in the morning and when you come home at night. Without being told, I make the room warmer before you arrive and cooler while you sleep. After about a week, I know your routine better than you do. What am I?",
-    hint: "You'd find me near a wall, controlling the temperature of a room — but I'm much smarter than an old dial.",
-    answer: "Smart Thermostat",
-    synonyms: ["smart thermostat","thermostat","nest","ecobee","smart heating","connected thermostat","intelligent thermostat","smart temperature control","digital thermostat"]
+    theme: "CLOUD STORAGE",
+    text: "I am a bucket that holds no water, just objects in the sky. I don't freeze, but my deepest archive is a Glacier. What am I?",
+    answers: ["s3", "amazon s3", "aws s3", "cloud storage", "glacier"],
+    hint: "Think about Amazon's web services and where you might store unstructured data."
   },
   {
-    id: 2, theme: "Wearables",
-    riddle: "I wrap around your wrist and know your heart better than most people do. I count every step you take, track how deeply you sleep, and quietly warn you when something feels off. I look like a watch but I do far more than tell the time. What am I?",
-    hint: "You wear it on your wrist. Brands like Apple, Fitbit, and Garmin make popular versions.",
-    answer: "Smartwatch",
-    synonyms: ["smartwatch","smart watch","fitness band","fitness tracker","wearable","smart band","apple watch","fitbit","activity tracker","health tracker","wearable device","smart wristband"]
+    theme: "HOME MEDIA",
+    text: "I organize your vast digital library using scrapers and smart playlists. I am an open-source hub for your screens, perfect for managing your anime collection. What am I?",
+    answers: ["kodi", "media center", "xbmc", "plex"],
+    hint: "It's a highly customizable open-source media player software."
   },
   {
-    id: 3, theme: "Voice Assistant",
-    riddle: "I sit in the corner of a room and listen — always. Say the right word and I wake up instantly. I can play your favourite song, read you the news, set a timer, or add something to your shopping list. I have no face, no screen, and no hands. I am just a voice that answers. What am I?",
-    hint: "Think of a small round or cylindrical speaker you talk to. 'Hey Alexa' or 'OK Google' might ring a bell.",
-    answer: "Smart Speaker",
-    synonyms: ["smart speaker","voice assistant","alexa","google home","amazon echo","echo","siri","google nest","virtual assistant","voice activated speaker","ai assistant","smart assistant","echo dot"]
+    theme: "GAMING TECH",
+    text: "I predict the future between frames to make your game run smoother. Some call me interpolation, others call me fluid motion. What am I?",
+    answers: ["frame generation", "afmf", "fsr", "fsr 3", "dlss", "fluid motion frames"],
+    hint: "A technique used by AMD and NVIDIA to artificially boost frame rates."
   },
   {
-    id: 4, theme: "Connectivity",
-    riddle: "I am invisible but fill every corner of your home. Without me, your laptop goes silent, your phone loses its mind, and your smart TV turns back into an ordinary box. I travel through walls and floors carrying information at incredible speed. Everyone in the house knows my password — or at least they should. What am I?",
-    hint: "You connect to this every day at home without thinking about it. Your phone asks for this when you move to a new place.",
-    answer: "WiFi",
-    synonyms: ["wifi","wi-fi","wireless internet","wireless network","internet","home network","broadband","router","wireless connection","home wifi","wireless"]
+    theme: "EDGE COMPUTING",
+    text: "I am a computer the size of a credit card. I can run a portable DIY project or a smart home, and my name sounds like a summer fruit. What am I?",
+    answers: ["raspberry pi", "rpi", "raspberry pi pico", "microcontroller"],
+    hint: "A very popular, low-cost single-board computer."
   },
   {
-    id: 5, theme: "Smart Security",
-    riddle: "I watch your front door while you sleep, and I send a video to your phone the moment anyone approaches — whether it is a delivery driver, a neighbour, or a stray cat at 3am. You can check on me from anywhere in the world as long as you have a signal. What am I?",
-    hint: "It's a camera at your front door that connects to your phone. Ring is one of the most famous brands.",
-    answer: "Smart Doorbell",
-    synonyms: ["smart doorbell","video doorbell","ring doorbell","ring","smart camera","security camera","connected camera","doorbell camera","smart security camera","video camera doorbell","door camera"]
+    theme: "AUDIO GEAR",
+    text: "I fit snugly in your ear canal to isolate you from the outside world. I deliver high-fidelity sound, and audiophiles love analyzing my frequency response graphs. What am I?",
+    answers: ["iem", "in ear monitor", "in-ear monitor", "earbuds", "earphones"],
+    hint: "Professional-grade earphones that sit deep inside the ear."
   },
   {
-    id: 6, theme: "Data & Storage",
-    riddle: "I have no shape you can touch, yet I hold your photos, your documents, your memories. Drop your phone in the sea — I survive. Spill coffee on your laptop — I am perfectly fine. I live somewhere between here and everywhere, accessible from any device in the world. What am I?",
-    hint: "Google Drive, iCloud, and Dropbox are examples. The name comes from what you see on a rainy day in the sky.",
-    answer: "Cloud Storage",
-    synonyms: ["cloud storage","cloud","the cloud","cloud computing","icloud","google drive","dropbox","onedrive","online storage","cloud backup","cloud service","cloud drive"]
+    theme: "DISPLAY HARDWARE",
+    text: "I project worlds onto your wall but have no screen of my own. Give me a solid HDMI connection, and I'll expand your gaming horizons. What am I?",
+    answers: ["projector", "video projector", "smart projector"],
+    hint: "It uses a lens and light to throw an image onto a blank surface."
   },
   {
-    id: 7, theme: "Everyday Tech",
-    riddle: "I am a small square made of black and white dots, and I hold more than I look. Point a phone camera at me and I take you somewhere instantly — a restaurant menu, a payment page, a website, an event ticket. I was invented in a Japanese car factory but now I appear on receipts, posters, and restaurant tables everywhere. What am I?",
-    hint: "You have probably scanned one of these instead of reading a printed menu at a café.",
-    answer: "QR Code",
-    synonyms: ["qr code","qr","quick response code","barcode","2d barcode","quick response","qr scan","matrix code"]
+    theme: "NETWORKING",
+    text: "I sit blinking in the corner, directing invisible packets of information. Without me, your local area network falls silent. What am I?",
+    answers: ["router", "wi-fi router", "wifi router", "modem", "switch"],
+    hint: "The device that assigns IP addresses and broadcasts your Wi-Fi signal."
   },
   {
-    id: 8, theme: "Smart City",
-    riddle: "I stand at every crossroads in the city. I used to work on a simple clock — green, amber, red, repeat. Now I watch the road, count the cars passing, and decide how long to stay green depending on what I see. On a quiet Sunday I move quickly; on a rush-hour Friday I think harder. What am I?",
-    hint: "You wait for this device every day when crossing a road or driving through a junction.",
-    answer: "Smart Traffic Light",
-    synonyms: ["smart traffic light","traffic light","traffic signal","smart signal","intelligent traffic light","adaptive traffic light","connected traffic light","traffic management","smart junction","traffic controller"]
+    theme: "SMART HOME",
+    text: "I have no eyes, but I see who is at your front step. I have no voice, but I tell your phone when a package arrives. What am I?",
+    answers: ["smart doorbell", "doorbell camera", "video doorbell", "ring doorbell"],
+    hint: "An IoT device that replaces your traditional doorbell."
   },
   {
-    id: 9, theme: "Connected Health",
-    riddle: "Doctors place me on patients who need watching. I am light enough to forget I am wearing me. Every few seconds I quietly send a message — heart rate, temperature, breathing — to a nurse who might be down the corridor or in a different building entirely. I speak so the patient does not have to. What am I?",
-    hint: "Think of a small device worn on the body that sends health information to medical staff wirelessly.",
-    answer: "Patient Monitor",
-    synonyms: ["patient monitor","remote patient monitor","health monitor","medical sensor","wearable monitor","health sensor","remote monitoring device","vital signs monitor","connected health device","medical wearable","body sensor","remote monitor"]
+    theme: "WEARABLES",
+    text: "I sit on your wrist and track your telemetry, but I have no legs. I measure your biometrics, but I am not a doctor. What am I?",
+    answers: ["smartwatch", "fitness tracker", "smart watch", "apple watch"],
+    hint: "A connected band you wear on your arm."
   },
   {
-    id: 10, theme: "Smart Appliances",
-    riddle: "I sit in your kitchen and keep things cold, but I have grown ambitious. I can now see what is inside me, tell you when the milk is about to expire, suggest a recipe based on what you have left, and place an order for more eggs before you even notice you are running low. I am the most ordinary appliance, made extraordinary. What am I?",
-    hint: "Every kitchen has one. It keeps your food fresh. Now imagine it could also talk to your phone.",
-    answer: "Smart Fridge",
-    synonyms: ["smart fridge","smart refrigerator","connected fridge","connected refrigerator","fridge","refrigerator","intelligent fridge","iot fridge","smart kitchen appliance","smart freezer","connected appliance"]
+    theme: "SMART CITY",
+    text: "I stand on the street corner and change my colors. I talk to the grid to clear the way when traffic gets heavy. What am I?",
+    answers: ["smart traffic light", "traffic light", "smart signal", "traffic signal"],
+    hint: "An automated system controlling intersection flow based on real-time data."
   }
 ];
 
-let stats = { attempted: 0, correct: 0, streak: 0 };
-let currentRiddle = null;
-let answered = false;
-let usedIndices = [];
-let hintOpen = false;
-let qrOpen = false;
+let currentIndex = 0;
+let attempted = 0;
+let correct = 0;
+let streak = 0;
+let hasHinted = false;
 
-function norm(s) { return s.toLowerCase().replace(/[^a-z0-9 ]/g,' ').replace(/\s+/g,' ').trim(); }
+// DOM Elements
+const riddleText = document.getElementById('riddleText');
+const themeBadge = document.getElementById('themeBadge');
+const riddleCounter = document.getElementById('riddleCounter');
+const answerInput = document.getElementById('answerInput');
+const feedback = document.getElementById('feedback');
+const hintText = document.getElementById('hintText');
+const hintBtn = document.getElementById('hintBtn');
+const nextBtn = document.getElementById('nextBtn');
+const checkBtn = document.getElementById('checkBtn');
+const progressDots = document.getElementById('progressDots');
 
-function isCorrect(input, riddle) {
-  const n = norm(input);
-  if (!n) return false;
-  return riddle.synonyms.some(s => { const ns = norm(s); return ns === n || ns.includes(n) || n.includes(ns); });
+// Init
+function init() {
+  renderDots();
+  loadRiddle(0);
 }
 
-function buildDots() {
-  const c = document.getElementById('progressDots');
-  c.innerHTML = '';
-  RIDDLES.forEach((_, i) => {
-    const d = document.createElement('div'); d.className = 'prog-dot'; d.id = 'dot-' + i; c.appendChild(d);
+function renderDots() {
+  progressDots.innerHTML = '';
+  riddles.forEach((_, i) => {
+    const dot = document.createElement('div');
+    dot.className = 'dot';
+    dot.id = `dot-${i}`;
+    progressDots.appendChild(dot);
   });
 }
 
-function updateStats() {
-  document.getElementById('statAttempted').textContent = stats.attempted;
-  document.getElementById('statCorrect').textContent = stats.correct;
-  document.getElementById('statStreak').textContent = stats.streak + (stats.streak >= 3 ? ' 🔥' : '');
-  document.getElementById('statAccuracy').textContent = stats.attempted ? Math.round(stats.correct / stats.attempted * 100) + '%' : '—';
+function updateDots() {
+  document.querySelectorAll('.dot').forEach((dot, i) => {
+    dot.classList.remove('active');
+    if (i === currentIndex) dot.classList.add('active');
+  });
+}
+
+function loadRiddle(index) {
+  currentIndex = index;
+  const riddle = riddles[currentIndex];
+  
+  themeBadge.innerText = riddle.theme;
+  riddleCounter.innerText = `RIDDLE 0${currentIndex + 1} / ${riddles.length}`;
+  riddleText.innerText = riddle.text;
+  
+  answerInput.value = '';
+  answerInput.disabled = false;
+  feedback.style.display = 'none';
+  nextBtn.style.display = 'none';
+  checkBtn.style.display = 'inline-block';
+  
+  hintText.innerText = riddle.hint;
+  hintText.style.display = 'none';
+  hintBtn.style.display = 'inline-block';
+  hasHinted = false;
+  
+  updateDots();
+  answerInput.focus();
 }
 
 function loadRandom() {
-  answered = false; hintOpen = false; qrOpen = false;
-  const inp = document.getElementById('answerInput');
-  inp.value = ''; inp.className = 'answer-input'; inp.disabled = false;
-  document.getElementById('checkBtn').disabled = false;
-  document.getElementById('feedback').className = 'feedback';
-  document.getElementById('feedback').innerHTML = '';
-  document.getElementById('nextBtn').className = 'next-btn';
-  document.getElementById('hintText').className = 'hint-text';
-  document.getElementById('hintText').textContent = '';
-  document.getElementById('hintBtn').textContent = 'Need a hint?';
-  document.getElementById('qrPanel').className = 'qr-panel';
-
-  let available = RIDDLES.map((_,i) => i).filter(i => !usedIndices.includes(i));
-  if (!available.length) { usedIndices = []; available = RIDDLES.map((_,i) => i); }
-  const idx = available[Math.floor(Math.random() * available.length)];
-  usedIndices.push(idx);
-  if (usedIndices.length > 5) usedIndices.shift();
-  currentRiddle = RIDDLES[idx];
-
-  document.querySelectorAll('.prog-dot').forEach(d => d.classList.remove('current'));
-  const dot = document.getElementById('dot-' + idx);
-  if (dot) dot.classList.add('current');
-
-  document.getElementById('themeBadge').textContent = currentRiddle.theme.toUpperCase();
-  document.getElementById('riddleCounter').textContent = 'RIDDLE ' + String(currentRiddle.id).padStart(2,'0') + ' / 10';
-  document.getElementById('riddleText').textContent = currentRiddle.riddle;
-
-  // New Static QR Code Logic
-  const qrC = document.getElementById('qrContainer');
-  qrC.innerHTML = `<img src="qr-${currentRiddle.id}.png" alt="QR Code for Riddle ${currentRiddle.id}" style="width: 150px; height: 150px; display: block;">`;
-
-  const arena = document.getElementById('arena');
-  arena.style.animation = 'none'; void arena.offsetWidth; arena.style.animation = 'fadeIn 0.4s ease';
-  setTimeout(() => inp.focus(), 150);
-}
-
-function toggleQR() {
-  qrOpen = !qrOpen;
-  document.getElementById('qrPanel').className = 'qr-panel' + (qrOpen ? ' open' : '');
+  let newIndex = currentIndex;
+  while(newIndex === currentIndex) {
+    newIndex = Math.floor(Math.random() * riddles.length);
+  }
+  loadRiddle(newIndex);
 }
 
 function toggleHint() {
-  hintOpen = !hintOpen;
-  const ht = document.getElementById('hintText');
-  const hb = document.getElementById('hintBtn');
-  if (hintOpen) { ht.textContent = '💡 ' + currentRiddle.hint; ht.className = 'hint-text open'; hb.textContent = 'Hide hint'; }
-  else { ht.className = 'hint-text'; hb.textContent = 'Need a hint?'; }
+  if (hintText.style.display === 'none') {
+    hintText.style.display = 'block';
+    hintBtn.innerText = 'Hide Hint';
+    hasHinted = true;
+  } else {
+    hintText.style.display = 'none';
+    hintBtn.innerText = 'Need a hint?';
+  }
+}
+
+function updateStats() {
+  document.getElementById('statAttempted').innerText = attempted;
+  document.getElementById('statCorrect').innerText = correct;
+  document.getElementById('statStreak').innerText = streak;
+  
+  const acc = attempted === 0 ? 0 : Math.round((correct / attempted) * 100);
+  document.getElementById('statAccuracy').innerText = `${acc}%`;
 }
 
 function checkAnswer() {
-  if (answered || !currentRiddle) return;
-  const inp = document.getElementById('answerInput');
-  const val = inp.value.trim();
-  if (!val) { inp.focus(); return; }
+  if(answerInput.disabled) return;
+  
+  const userAns = answerInput.value.toLowerCase().trim();
+  if(!userAns) return;
 
-  answered = true;
-  stats.attempted++;
-  document.getElementById('checkBtn').disabled = true;
-  inp.disabled = true;
+  const riddle = riddles[currentIndex];
+  const isCorrect = riddle.answers.some(ans => userAns.includes(ans));
 
-  const ok = isCorrect(val, currentRiddle);
-  const dotIdx = RIDDLES.indexOf(currentRiddle);
-  const dot = document.getElementById('dot-' + dotIdx);
-  if (dot) { dot.classList.remove('current'); dot.classList.add(ok ? 'correct' : 'wrong'); }
+  attempted++;
+  
+  feedback.style.display = 'block';
+  checkBtn.style.display = 'none';
+  hintBtn.style.display = 'none';
+  hintText.style.display = 'none';
+  answerInput.disabled = true;
 
-  const fb = document.getElementById('feedback');
-  if (ok) {
-    stats.correct++; stats.streak++;
-    inp.className = 'answer-input correct-border';
-    fb.className = 'feedback correct';
-    fb.innerHTML = '✓ &nbsp;Correct! Nice thinking.';
+  if (isCorrect) {
+    correct++;
+    streak++;
+    feedback.innerHTML = `<span style="color:var(--neon-green)">[ ACCESS GRANTED ]</span> Correct.`;
+    document.getElementById(`dot-${currentIndex}`).style.background = 'var(--neon-green)';
+    document.getElementById(`dot-${currentIndex}`).style.boxShadow = '0 0 10px var(--neon-green)';
   } else {
-    stats.streak = 0;
-    inp.className = 'answer-input wrong-border';
-    fb.className = 'feedback wrong';
-    fb.innerHTML = '✗ &nbsp;Not quite — keep it in mind for next time.'
-      + '<div class="correct-ans">The answer was: <span>' + currentRiddle.answer + '</span></div>';
+    streak = 0;
+    feedback.innerHTML = `<span style="color:#ff4444">[ ACCESS DENIED ]</span> Incorrect. The system was looking for: ${riddle.answers[0].toUpperCase()}`;
+    document.getElementById(`dot-${currentIndex}`).style.background = '#ff4444';
+    document.getElementById(`dot-${currentIndex}`).style.boxShadow = '0 0 10px #ff4444';
   }
 
+  nextBtn.style.display = 'inline-block';
   updateStats();
-  document.getElementById('nextBtn').className = 'next-btn visible';
 }
 
-buildDots();
-updateStats();
-window.addEventListener('load', () => setTimeout(loadRandom, 200));
+// Start app
+window.onload = init;
